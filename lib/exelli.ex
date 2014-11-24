@@ -5,5 +5,21 @@ defmodule Exelli do
     import Supervisor.Spec, warn: false
     Exelli.Supervisor.start_link
   end
-  
+
+  def elli_start(handler) do
+    Exelli.Supervisor.elli_start(handler)
+  end
+
+  def elli_start(handler, options) do
+    Exelli.Supervisor.elli_start(handler, options)
+  end
+
+  def elli_start(name, handler, options) do
+    Exelli.Supervisor.elli_start(name, handler, options)
+  end
+
+  def elli_stop(name \\ :default_elli) do
+    Exelli.Supervisor.elli_stop(name)
+  end
+
 end
