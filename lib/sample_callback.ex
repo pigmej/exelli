@@ -2,9 +2,7 @@ defmodule Exelli.Callback do
   @behaviour :elli_handler
   @moduledoc false
 
-
   require :elli_request, as: R
-
 
   def handle(req, args) do
     handle(R.method(req), R.path(req), req, args)

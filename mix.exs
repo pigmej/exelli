@@ -13,7 +13,8 @@ defmodule Exelli.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [applications: [:logger],
-     mod: {Exelli, [{:callback, Exelli.Callback}, {:port, 4001}]}]
+     mod: {Exelli, []}]
+     # mod: {Exelli, [{:callback, Exelli.Callback}, {:port, 4001}]}]
   end
 
   # Dependencies can be Hex packages:
