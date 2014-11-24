@@ -1,6 +1,8 @@
 defmodule Exelli.Supervisor do
   use Supervisor
 
+  @default_elli_name :default_elli
+
   def start_link do
     Supervisor.start_link(__MODULE__, :ok, name: __MODULE__)
   end
@@ -11,22 +13,20 @@ defmodule Exelli.Supervisor do
   end
 
   def elli_start(handler) do
-    elli_start(:default_elli, handler, [])
+    opts = [:elli_name, @default_elli_name]
+    elli_start(handler, opts)
   end
 
   def elli_start(handler, options) do
-    elli_start(:default_elli, handler, options)
-  end
-
-  def elli_start(name, handler, options) do
+    {elli_name, options} = Keyword.pop(options, :elli_name, @default_elli_name)
     options = Keyword.put(options, :callback, handler)
     defaults = [{:port, 4000}]
     options = Keyword.merge(defaults, options)
-    Supervisor.start_child(__MODULE__, worker(:elli, [options], [id: name]))
+    Supervisor.start_child(__MODULE__, worker(:elli, [options], [id: elli_name]))
   end
 
   def elli_stop() do
-    elli_stop(:default_elli)
+    elli_stop(@default_elli_name)
   end
 
   def elli_stop(name) do
