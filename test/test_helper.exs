@@ -21,4 +21,23 @@ defmodule Exelli.TestHandler.Simple do
     {:ok, "WORKS"}
   end
 
+  post ["test"] do
+    {:ok, "POST WORKS"}
+  end
+
 end
+
+
+
+defmodule Exelli.TestHandler.Middleware do
+  use Exelli.Handler
+
+  # def handle(req, args), do: :ignore
+
+  get [] do
+    {:ok, "middleware"}
+  end
+
+end
+
+
