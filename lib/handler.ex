@@ -27,6 +27,7 @@ defmodule Exelli.Handler do
     end
   end
 
+  # TODO: improve that boilerplate
   defmacro get(path, req, args, do: code) do
     quote do
       expose(:GET, unquote(path), unquote(req), unquote(args)) do
@@ -67,9 +68,10 @@ defmodule Exelli.Handler do
     end
   end
 
+  # TODO: handle / print errors somehow
   defmacro __before_compile__(_env) do
     quote do
-      def handle(_, _, _, _), do: :ignore
+      def handle(_, _, _, _), do: {404, [], "Not found"}
       def handle_event(_, _, _), do: :ok
     end
   end

@@ -10,24 +10,20 @@ defmodule Exelli.Callback do
 
   use Exelli.Handler
 
-  def handle(:GET, ["ping"], req, args) do
+  def handle(:GET, ["ping"], _req, _args) do
     {:ok, "OK"}
   end
 
-  get ["test", a], req, args when a == "x" do
+  # def handle(:GET, ["test", a]) when a == "a" do
+  #   {:ok, "A"}
+  # end
+
+  get ["test"], _req, _args do
     {:ok, "WORKS"}
   end
 
-  get ["test", a], req, args when a == "y" do
+  get ["test", "y"], _req, _args do
     {:ok, "y"}
   end
-
-
-  # def handle_event(_event, _data, _args) do
-  #   # IO.inspect _event
-  #   # IO.inspect _data
-  #   # IO.inspect _args
-  #   :ok
-  # end
 
 end
