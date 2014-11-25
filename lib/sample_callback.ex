@@ -18,11 +18,11 @@ defmodule Exelli.Callback do
     {:ok, "A"}
   end
 
-  get ["test"], _req, _args do
+  get ["test"] do
     {:ok, "WORKS"}
   end
 
-  get ["test", "y"], _req, _args do
+  get ["test", y, yy] when y == "1" and yy == "2" do
     {:ok, "y"}
   end
 

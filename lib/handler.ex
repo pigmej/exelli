@@ -19,59 +19,36 @@ defmodule Exelli.Handler do
 
   end
 
-  defmacro expose(method, path, req, args, do: code) do
+
+  defmacro expose(method, {:when, _, [path, guards]}, do: code) do
     quote do
-      def handle(unquote(method), unquote(path), unquote(req), unquote(args)) do
+      def handle(unquote(method), unquote(path), req, args) when unquote(guards) do
         unquote(code)
       end
     end
   end
 
-  # TODO: improve that boilerplate
-  defmacro get(path, req, args, do: code) do
+  defmacro expose(method, path, do: code) do
     quote do
-      expose(:GET, unquote(path), unquote(req), unquote(args)) do
+      def handle(unquote(method), unquote(path), req, args) do
         unquote(code)
       end
     end
   end
 
-  defmacro post(path, req, args, do: code) do
+  defmacro get(options, do: code) do
     quote do
-      expose(:POST, unquote(path), unquote(req), unquote(args)) do
+      expose :GET, unquote(options) do
         unquote(code)
       end
     end
   end
 
-  defmacro head(path, req, args, do: code) do
-    quote do
-      expose(:HEAD, unquote(path), unquote(req), unquote(args)) do
-        unquote(code)
-      end
-    end
-  end
 
-  defmacro delete(path, req, args, do: code) do
-    quote do
-      expose(:DELETE, unquote(path), unquote(req), unquote(args)) do
-        unquote(code)
-      end
-    end
-  end
-
-  defmacro patch(path, req, args, do: code) do
-    quote do
-      expose(:PATCH, unquote(path), unquote(req), unquote(args)) do
-        unquote(code)
-      end
-    end
-  end
-
-  # TODO: handle / print errors somehow
+  # # TODO: handle / print errors somehow
   defmacro __before_compile__(_env) do
     quote do
-      def handle(_, _, _, _), do: {404, [], "Not found"}
+      def handle(_, _, _, _), do: :ignore
       def handle_event(_, _, _), do: :ok
     end
   end
