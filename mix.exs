@@ -5,7 +5,7 @@ defmodule Exelli.Mixfile do
     [app: :exelli,
      version: "0.0.1",
      elixir: "~> 1.0",
-     deps: deps]
+     deps: deps(Mix.env)]
   end
 
   # Configuration for the OTP application
@@ -26,7 +26,15 @@ defmodule Exelli.Mixfile do
   #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
   #
   # Type `mix help deps` for more examples and options
-  defp deps do
+  defp deps(:prod) do
     [{:elli, github: "knutin/elli"}]
+  end
+
+  defp deps(:test) do
+    deps(:prod) ++ [{ :httpoison, "~> 0.5.0" }]
+  end
+
+  defp deps(_) do
+    deps(:prod)
   end
 end
