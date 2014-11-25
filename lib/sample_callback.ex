@@ -14,9 +14,9 @@ defmodule Exelli.Callback do
     {:ok, "OK"}
   end
 
-  # def handle(:GET, ["test", a]) when a == "a" do
-  #   {:ok, "A"}
-  # end
+  def handle(:GET, ["test", a], _req, _args) when a == "a" do
+    {:ok, "A"}
+  end
 
   get ["test"], _req, _args do
     {:ok, "WORKS"}
