@@ -1,7 +1,7 @@
 defmodule Exelli.Handler do
   defmacro __using__(_opts) do
 
-    quote do
+    quote location: :keep do
       @before_compile Exelli.Handler
 
       @behaviour :elli_handler
@@ -12,20 +12,44 @@ defmodule Exelli.Handler do
         match(R.method(req), R.path(req), req, :undefined)
       end
 
-      def handle(req, args) do
-        # TODO: optimize prefix
-        # How to not call it when not necessary ?
-        prefix = args[:prefix]
-        path = R.path(req) |> Enum.drop(Enum.count(prefix))
-        match(R.method(req), path, req, args)
+      def handle(req, []) do
+        match(R.method(req), R.path(req), req, [])
       end
 
+
+      def handle(req, args) do
+        # TODO: optimize prefix
+        # TODO: filter if prefix matches
+        prefix = args[:prefix]
+        path = R.path(req)
+        case prefix do
+                 nil -> match(R.method(req), path, req, args)
+                 [] -> match(R.method(req), path, req, args)
+                 arr -> handle_with_prefix(req, path, prefix, args)
+        end
+      end
+
+      defp handle_with_prefix(req, path, prefix, args) do
+        case Exelli.prefix_match(path, prefix) do
+          false -> :ignore
+          true -> match(R.method(req), path |> Enum.drop(Enum.count(prefix)), req, args)
+        end
+      end
+
+      def handle_event(_, _, _) do
+        :ok
+      end
+
+      # def match(_, _, _, _), do: :ignore
+
       import Exelli.Handler
+
+      # defoverridable [match: 4, handle_event: 3, handle: 2]
+      defoverridable [handle_event: 3, handle: 2]
 
     end
 
   end
-
 
   defmacro expose(method, {:when, _, [path, guards]}, do: code) do
     quote do
@@ -84,14 +108,8 @@ defmodule Exelli.Handler do
   end
 
   defmacro __before_compile__(_env) do
+    IO.inspect _env
     quote do
-      def handle_event(:request_error, tb, c) do
-        IO.puts "ERROR"
-        IO.inspect tb
-        :ok
-      end
-      def handle_event(_, _, _), do: :ok
-
       def match(_, _, _, _), do: :ignore
     end
   end

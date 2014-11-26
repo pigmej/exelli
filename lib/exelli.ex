@@ -27,9 +27,12 @@ defmodule Exelli do
     elli_start(:elli_middleware, options ++ middleware)
   end
 
-
   def elli_stop(elli_name \\ @default_elli_name) do
     Exelli.Supervisor.elli_stop(elli_name)
+  end
+
+  def prefix_match(path, prefix) do
+    :lists.prefix(prefix, path)
   end
 
 end

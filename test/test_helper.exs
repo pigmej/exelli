@@ -2,7 +2,7 @@ ExUnit.start
 
 
 Application.ensure_all_started(:httpoison)
-Logger.configure_backend(:console, colors: [enabled: false], metadata: [:request_id])
+Logger.configure_backend(:console, colors: [enabled: false])
 
 
 defmodule Exelli.TestHandler.Simple do
@@ -28,16 +28,35 @@ defmodule Exelli.TestHandler.Simple do
 end
 
 
-
-defmodule Exelli.TestHandler.Middleware do
+defmodule Exelli.TestHandler.SubSimple do
   use Exelli.Handler
 
-  # def handle(req, args), do: :ignore
-
   get [] do
-    {:ok, "middleware"}
+    {:ok, "HELLO sub"}
+  end
+
+  get ["ping"] do
+    {:ok, "PONG sub"}
+
+  end
+
+  get ["test"] do
+    {:ok, "WORKS sub"}
+  end
+
+  post ["test"] do
+    {:ok, "POST WORKS sub"}
   end
 
 end
 
 
+
+defmodule Exelli.TestHandler.Middleware do
+  use Exelli.Handler
+
+  def handle(_, _) do
+    :ignore
+  end
+
+end
