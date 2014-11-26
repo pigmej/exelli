@@ -108,7 +108,6 @@ defmodule Exelli.Handler do
   end
 
   defmacro __before_compile__(_env) do
-    IO.inspect _env
     quote do
       def match(_, _, _, _), do: :ignore
     end
