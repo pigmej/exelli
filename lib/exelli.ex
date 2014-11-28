@@ -21,10 +21,26 @@ defmodule Exelli do
   end
 
   def elli_start(handler, options) do
+    handler = Enum.map(handler, &normalize_option/1)
     middleware = [
                    {:callback_args, [mods: handler]}
                ]
     elli_start(:elli_middleware, options ++ middleware)
+  end
+
+  defp normalize_option({handler, prefix}) when is_atom(handler) and is_binary(prefix) do
+    {handler, [prefix: [prefix]]}
+  end
+
+  defp normalize_option({handler, prefix}) when is_atom(handler) and is_list(prefix) do
+    case Keyword.has_key?(prefix, :prefix) do
+      true -> {handler, prefix}
+      false -> {handler, [prefix: prefix]}
+    end
+  end
+
+  defp normalize_option({handler, opts}) do
+    {handler, opts}
   end
 
   def elli_stop(elli_name \\ @default_elli_name) do

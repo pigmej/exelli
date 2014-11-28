@@ -10,9 +10,9 @@ defmodule ExelliTest.Test.Middleware do
   end
 
   setup_all do
-    {:ok, pid} = Exelli.elli_start [{Exelli.TestHandler.Middleware, [prefix: ["middleware1"]]},
-                                    {Exelli.TestHandler.SubSimple, [prefix: ["sub"]]},
-                                    {Exelli.TestHandler.Simple, [prefix: []]}]
+    {:ok, pid} = Exelli.elli_start [{Exelli.TestHandler.Middleware, [prefix: ["middleware1"]]}, # normal prefix
+                                    {Exelli.TestHandler.SubSimple, "sub"}, # easy prefix
+                                    {Exelli.TestHandler.Simple, [prefix: []]}] # no prefix
     on_exit &Exelli.elli_stop/0
     {:ok, pid: pid}
   end

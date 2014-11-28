@@ -60,3 +60,14 @@ defmodule Exelli.TestHandler.Middleware do
   end
 
 end
+
+
+defmodule Exelli.TestRouter do
+
+  use Exelli.Router
+
+  enable Exelli.TestHandler.Middleware, [prefix: ["middleware"]]
+  enable Exelli.TestHandler.SubSimple, "sub"
+  enable Exelli.TestHandler.Simple, [prefix: []]
+
+end
