@@ -83,6 +83,14 @@ defmodule Exelli.Handler do
     end
   end
 
+  defmacro patch(options, do: code) do
+    quote do
+      expose :PATCH, unquote(options) do
+        unquote(code)
+      end
+    end
+  end
+
   defmacro head(options, do: code) do
     quote do
       expose :HEAD, unquote(options) do
