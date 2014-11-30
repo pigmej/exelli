@@ -2,7 +2,7 @@ defmodule Exelli.Router do
 
   defmacro __using__(_opts) do
     quote do
-      
+
       Module.register_attribute(__MODULE__, :handlers, accumulate: true)
 
       import Exelli.Router
@@ -11,7 +11,7 @@ defmodule Exelli.Router do
     end
   end
 
-  
+
   defmacro enable(hndl, opts) do
     quote do
       Module.put_attribute __MODULE__, :handlers, {unquote(hndl), unquote(opts)}
