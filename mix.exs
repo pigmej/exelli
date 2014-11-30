@@ -3,9 +3,11 @@ defmodule Exelli.Mixfile do
 
   def project do
     [app: :exelli,
-     version: "0.0.1",
+     version: "0.1.0",
      elixir: "~> 1.0",
-     deps: deps(Mix.env)]
+     deps: deps(Mix.env),
+     package: package,
+     description: description]
   end
 
   def application do
@@ -23,5 +25,19 @@ defmodule Exelli.Mixfile do
 
   defp deps(_) do
     deps(:prod)
+  end
+
+  defp description do
+    """
+    Elli wrapper for elixir, with some sugar syntax.
+    """
+  end
+
+  defp package do
+    [
+        files: ~w(lib mix.exs test README* LICENSE*),
+        licenses: ["Apache 2.0"],
+        contributors: "Jędrzej Nowak"
+    ]
   end
 end
