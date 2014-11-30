@@ -29,7 +29,7 @@ defmodule Exelli.Mixfile do
 
   defp description do
     """
-    Elli wrapper in elixir, with some sugar syntax. (up to 2 times faster than Plug)
+    Elli wrapper in elixir, with some sugar syntax. (even 2 times faster than Plug on Cowboy)
     """
   end
 
