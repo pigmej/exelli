@@ -19,7 +19,6 @@ defmodule Exelli.Handler do
 
       def handle(req, args) do
         # TODO: optimize prefix
-        # TODO: filter if prefix matches
         prefix = args[:prefix]
         path = R.path(req)
         case prefix do
