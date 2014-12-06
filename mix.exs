@@ -37,7 +37,8 @@ defmodule Exelli.Mixfile do
     [
         files: ~w(lib mix.exs test README* LICENSE*),
         licenses: ["Apache 2.0"],
-        contributors: ["Jędrzej Nowak"]
+        contributors: ["Jędrzej Nowak"],
+        links: %{"GitHub" => "https://github.com/pigmej/exelli"}
     ]
   end
 end
