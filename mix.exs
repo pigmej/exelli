@@ -6,8 +6,8 @@ defmodule Exelli.Mixfile do
      version: "0.1.0",
      elixir: "~> 1.0",
      deps: deps(Mix.env),
-     package: package,
-     description: description]
+     package: package(),
+     description: description()]
   end
 
   def application do
