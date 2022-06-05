@@ -8,11 +8,11 @@ defmodule Exelli.Supervisor do
 
   def init(:ok) do
     children = []
-    supervise(children, strategy: :one_for_one)
+    Supervisor.init(children, strategy: :one_for_one)
   end
 
   def elli_start(elli_name, options) do
-    Supervisor.start_child(__MODULE__, worker(:elli, [options], [id: elli_name]))
+    Supervisor.start_child(__MODULE__, {:elli, [options], [id: elli_name]})
   end
 
   def elli_stop(elli_name) do
